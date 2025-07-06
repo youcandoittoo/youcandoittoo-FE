@@ -1,0 +1,78 @@
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-box {
+  position: relative;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  width: 300px;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.loading-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.loading-text {
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.loading-bar {
+  width: 100%;
+  height: 10px;
+  background: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.5s;
+}
+
+.loading-percentage {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+@keyframes spin360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 애니메이션 적용 */
+.loading-deco {
+  font-size: 32px;
+  display: inline-block;
+  animation: spin360 1s linear infinite;
+}

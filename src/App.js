@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import SelectInterviewPage from "./pages/SelectInterviewPage";
+import ResumeInterviewPage from "./pages/ResumeInterviewPage"; 
+import JobPostInterviewPage from "./pages/JobPostInterviewPage";
+import CategoryInterviewPage from "./pages/CategoryInterviewPage";
+import InterviewSession from "./pages/InterviewSession";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/select" element={<SelectInterviewPage />} />
+        <Route path="/resume-interview" element={<ResumeInterviewPage />} />
+        <Route path="/jobpost-interview" element={<JobPostInterviewPage />} />
+        <Route path="/category-interview" element={<CategoryInterviewPage />} />
+         <Route path="/interview-session" element={<InterviewSession />} />
+        {/* Add more routes as needed */}
+      </Routes>
+    </Router>
   );
 }
 

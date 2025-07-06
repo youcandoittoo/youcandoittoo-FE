@@ -1,0 +1,84 @@
+.tab-header {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 24px;
+  font-size: 18px;
+}
+
+.tab {
+  padding: 8px 12px;
+  border-bottom: 3px solid transparent;
+  color: #999;
+  cursor: pointer;
+}
+
+.tab.active {
+  border-bottom: 3px solid #4f46e5;
+  color: #4f46e5;
+  font-weight: bold;
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 160px;
+  background: #0456ed;
+  z-index: 0; /* 제일 아래 */
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 50px;
+}
+
+.card-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.interview-card {
+  flex: 1;
+  min-width: 280px;
+  height : 480px;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.interview-card:hover {
+  transform: translateY(-4px);
+}
+
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.card-details {
+  list-style: none;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #444;
+}
+
+

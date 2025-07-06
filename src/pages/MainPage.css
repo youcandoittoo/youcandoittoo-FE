@@ -1,0 +1,479 @@
+/* 상단 네비게이션 */
+.main-header {
+  width: 100%;
+  background: #e7e7f7;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-inner {
+  height: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.source-text,.small-text {
+  font-size: 8px;
+  color: #666;
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+}
+.small-text{
+  display: flex;
+  justify-content: start; /* 오른쪽 정렬 */
+  align-items: center;
+  width: 100%;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+}
+logo-img {
+  width: 80px;
+  height: 80px;
+}
+.logo-title {
+  font-weight: bold;
+  font-size: 20px;
+  color: #111;
+}
+.logo-desc{
+  font-size:12px;
+  color: #707070;
+  font-weight: 500;
+  margin-top:2px;
+  letter-spacing: 0.01em;
+}
+.nav-menu {
+    font-size: 20px;
+  display: flex;
+  gap: 32px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+.nav-link {
+  color: #444;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+  position: relative;
+  padding: 0 12px; /* 선이 너무 가까워지지 않도록 여백 추가 */
+}
+
+/* 세로 구분선 */
+.nav-link:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 3px;
+  background-color: #ccc;
+}
+
+.nav-link:hover {
+  color: #2563eb;
+}
+
+.login-btn {
+  background: #111;
+  color: #fff;
+  border-radius: 22px;
+  padding: 8px 28px;
+  font-weight: 600;
+  font-size: 17px;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: background 0.2s;
+}
+.login-btn:hover {
+  background: #2563eb;
+}
+
+.app-container {
+  padding: 40px;
+  font-family: 'Noto Sans KR', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+   background: rgba(208, 216, 226, 0.3);
+}
+.app-container {
+  padding: 40px;
+  font-family: sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.big-logo {
+  width: 100%;
+  height: auto;
+  margin-bottom: 24px;
+  font-size: 44px;
+  line-height: 1.3;
+  text-align: left;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+/* 타자기 효과 */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes typing {
+  from { width: 0ch; }
+  to { width: 8.5ch; } /* ← 글자 수 만큼만 커지도록 설정 */
+}
+
+.blue-text {
+  color: #2563eb;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #2563eb;
+  animation: typing 2s steps(9, end) forwards, blink 0.75s step-end infinite;
+  font-size: inherit;
+  vertical-align: baseline;
+  line-height: inherit;
+  font-family: inherit;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes typing2 {
+  from { width: 0ch; }
+  to { width: 14.5ch; }
+}
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+.blue-text2 {
+  color: #2563eb;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #2563eb;
+  animation: typing2 2.5s steps(17, end) forwards, blink 0.75s step-end infinite;
+  font-size: inherit;
+  vertical-align: baseline;
+  line-height: inherit;
+  font-family: inherit;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.start-btn{
+  background: #2563eb;
+  color: #fff;
+  border-radius: 22px;
+  padding: 10px 32px;
+  font-weight: 600;
+  font-size: 17px;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.start-btn:hover{
+  background: #111;
+}
+
+/* 구분선 */
+.hero-divider {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 36px 0 32px 0;
+}
+
+/* 설명+이미지 */
+.info-image-section {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+.info-texts {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.infor-desc-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2px; /* 간격 더 줄이기 */
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.infor-desc-sub {
+  font-size: 1.1rem;
+  margin-top: 5px;      /* 위쪽 간격 없애기 */
+  margin-bottom: 12px; /* 아래쪽 간격도 줄이기 */
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+.infor-desc {
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color:#5c5c5c;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+.info-img-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info-big-img {
+  width: 290px;
+  height: 400px;
+  max-width: 30vw;
+
+  border-radius: 18px;
+  background: #fafaff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+/* 설명 링크 */
+.hero-desc-link {
+  width: 100%;
+  text-align: center;
+  margin: 28px 0 0 0;
+  font-size: 1.1rem;
+  color: #222;
+  font:bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.underline {
+  text-decoration: underline;
+  color:#2563eb
+}
+.infor-desc {
+  text-align: left;
+  width: 100%;
+  margin-left: 0;
+  justify-content: flex-start;
+}
+.stats-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  
+}
+.stats-section > div {
+  flex: 1 1 0;
+  text-align: left;
+  padding: 0 18px;
+  border-right: 1px solid #e0e0e0;
+}
+.stats-section > div:last-child {
+  border-right: none;
+}
+.stats-number {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display:flex;
+  width:100%;
+  justify-content: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3)
+}
+.stats-desc {
+  font-size: 15px;
+  font-weight: bold;
+  color: #444;
+  line-height: 1.5;
+  display:flex;
+  width:100%;
+  justify-content: left;
+}
+
+.custom-btn {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #5b5bf7;
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 10px 32px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.custom-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  margin: 32px 0;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 24px;
+}
+
+.card-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.card-desc1{
+  font-size: 19px;
+
+}
+
+.card-desc {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color :#444;
+
+}
+.card-list {
+  font-size: 14px;
+  padding-left: 16px;
+  line-height: 1.6;
+  list-style: none;
+}
+
+/* 기본 상태: 숨김 */
+.fade-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* 보여질 때 클래스 추가 */
+.fade-item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.resume-flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+}
+
+.resume-texts {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.card-img {
+  width: 320px;
+  margin-top: 60px;
+  max-width: 40vw;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.custom-card.hero-card {
+  max-width: 950px;      /* 카드 최대 너비 줄이기 */
+  margin: 40px auto;     /* 가운데 정렬 */
+  padding: 48px 48px 40px 48px; /* 좌우 패딩 늘리기 */
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.hero-section,
+.info-image-section,
+.stats-section,
+.resume-section,
+.jobposting-section {
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+
+.stats-section {
+  flex-direction: row;
+  justify-content: center;
+  gap: 48px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.stats-section > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-flow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+  gap: 40px 80px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 60px;
+}
+
+.step-card {
+  width: 220px;
+  background-color: #e8fbe8;
+  padding: 20px;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.step-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.arrow {
+  position: absolute;
+  font-size: 24px;
+  color: #444;
+}
+
+/* 정확한 위치의 화살표 (px는 카드 기준 조정 가능) */
+.arrow.right {
+  top: 20px;
+  left: 280px;
+}
+.arrow.down {
+  top: 79px;
+  left: 460px;
+}
+.arrow.left {
+  top: 140px;
+  left: 280px;
+}
