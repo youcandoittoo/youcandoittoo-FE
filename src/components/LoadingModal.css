@@ -76,3 +76,17 @@
   display: inline-block;
   animation: spin360 1s linear infinite;
 }
+
+.result-message {
+  font-size: 18px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.result-message.success {
+  color: green;
+}
+
+.result-message.fail {
+  color: red;
+}

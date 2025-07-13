@@ -1,0 +1,65 @@
+.card-flow {
+  display: grid;
+  grid-template-columns: auto 40px auto;
+  grid-template-rows: auto 40px auto;
+  grid-template-areas:
+    "step1 arrow1 step2"
+    ".     .      arrow2"
+    "step4 arrow3 step3";
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+/* 카드 공통 스타일 */
+.step-card,
+.step-card1 {
+  width: 240px;
+  padding: 20px;
+  border-radius: 50px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.step-card {
+  background-color: #e8fbe8;
+}
+
+.step-card1 {
+  background-color: #DBEAFE;
+}
+
+/* 카드 위치 지정 */
+.step-card:nth-child(1),
+.step-card1:nth-child(1) {
+  grid-area: step1;
+}
+
+.step-card:nth-child(3),
+.step-card1:nth-child(3) {
+  grid-area: step2;
+}
+
+.step-card:nth-child(5),
+.step-card1:nth-child(5) {
+  grid-area: step4;
+}
+
+.step-card:nth-child(7),
+.step-card1:nth-child(7) {
+  grid-area: step3;
+}
+
+
+/* 화살표 */
+.arrow {
+  font-size: 24px;
+  color: #2563eb;
+  text-align: center;
+  font-weight: bold;
+}
+
+.arrow:nth-child(2) { grid-area: arrow1; }
+.arrow:nth-child(4) { grid-area: arrow2; }
+.arrow:nth-child(6) { grid-area: arrow3; }

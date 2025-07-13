@@ -1,11 +1,4 @@
 
-.interview-container {
-  padding: 32px;
-  max-width: 1200px;
-  margin: auto;
-  font-family: sans-serif;
-}
-
 .interview-header {
   display: flex;
   justify-content: space-between;
@@ -24,13 +17,6 @@
   margin-left: 12px;
 }
 
-.question-box {
-  border-left: 4px solid #0456ed;
-  padding: 12px;
-  background: #f0f4ff;
-  border-radius: 6px;
-}
-
 .exit-button {
   background-color: #e0f2e9;
   border: none;
@@ -40,12 +26,26 @@
   font-weight: bold;
 }
 
+/* 전체 카드 영역 */
+.interview-card1 {
+  margin: 0 auto;
+  background-color: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* 좌우 레이아웃 */
 .interview-grid {
   display: flex;
   gap: 24px;
-  align-items: stretch;
+  align-items: flex-start; /* ✅ 요소 확장 방지 */
 }
 
+/* 왼쪽 웹캠 영역 */
 .webcam-section {
   flex: 1;
   display: flex;
@@ -57,35 +57,50 @@
   border-radius: 12px;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  min-height: 400px;
+  max-height: 600px;
 }
 
+/* 웹캠 비디오 스타일 */
 .webcam-video {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  height: 50%;
+  width: 90%;                /* ✅ 가로 너비 확대 */
+  height: auto;
   border-radius: 12px;
   background-color: black;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;       /* ✅ 가로가 넓은 비율 */
   transform: scaleX(-1); 
   object-fit: cover;
 }
 
-.progress-box {
-  margin-bottom: 20px;
-  position: relative; /* z-index 작동 위해 필요 */
-  z-index: 1;         /* bar보다 위에 */
-  max-width: 1200px;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  margin: 32px auto;
-  background-color: white; /* 불투명 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* 오른쪽 Q&A 영역 */
+.qa-section {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  padding: 24px;
+  justify-content: space-between;
+  min-height: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* 진행률, 질문, 피드백 박스 공통 */
+.progress-box,
+.question-box,
+.feedback-box {
+  margin: 5px;
+  padding: 16px;
+  flex-grow: 1;
+}
+
+/* 진행률 박스 */
+.progress-box {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .progress-bar {
@@ -101,12 +116,29 @@
   background: #4caf50;
 }
 
+/* 질문 박스 */
+.question-box {
+  border-left: 4px solid #0456ed;
+  padding: 12px;
+  background: #f0f4ff;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.hero-divider1 {
+  border-top: 1px solid #e0e0e0;
+}
+
+/* 피드백 박스 */
 .feedback-box {
   margin-top: 20px;
   border-left: 4px solid #aaa;
   padding: 12px;
   background: #f9f9f9;
   border-radius: 6px;
+  max-height: 120px;
+  overflow-y: auto;
 }
 
 .feedback-header {
@@ -115,36 +147,91 @@
   font-weight: bold;
 }
 
-.hero-divider1{
-  border-top: 1px solid #e0e0e0;
+/* 실시간 음성 텍스트 박스 */
+.live-transcript-box {
+  margin-top: 16px;
+  padding: 10px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 14px;
+}
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.interview-card{
-  margin: 0 auto;    /* 가운데 정렬 */
+.confirm-card {
   background-color: white;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.confirm-buttons {
   margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.qa-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;  /* 👈 3개 요소를 상하로 간격 맞춤 */
-}
-.progress-box,
-.question-box,
-.feedback-box {
-  margin: 5px;
-  padding: 16px;
-  flex-grow: 1; /* 비율 유지를 위해 */
+.confirm-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
-.webcam-section,
-.qa-section {
-  flex: 1;
+.confirm-buttons .danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  padding: 32px;
+  margin: 0;
+  overflow-y: auto;
+  box-shadow: none;
   display: flex;
-  flex-direction: column;
+  gap: 24px;
+}
+
+.fullscreen .webcam-section,
+.fullscreen .qa-section {
+  height: auto;
+  max-height: none;
+  flex: 1;
+}
+
+.fullscreen-button {
+  margin-right: 12px;
+  padding: 8px 14px;
+  border: none;
+  background-color: #e3e3ff;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.fullscreen-button:hover {
+  background-color: #cfd8ff;
 }

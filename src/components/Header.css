@@ -1,0 +1,194 @@
+/* 전체 레이아웃 - 반응형 */
+.tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3%;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+/* 각 탭 스타일 */
+.tab {
+  position: relative;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.tab:hover {
+  color: #007bff;
+}
+
+.tab.active {
+  color: #007bff;
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+}
+
+/* 드롭다운 기본 설정 */
+.tab-label {
+  position: relative;
+  z-index: 1;
+}
+
+.tab-label.active {
+  color: #007bff;
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+}
+
+/* 드롭다운 메뉴 */
+.absolute-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 100;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* 로고 영역 */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  cursor: pointer;
+  margin-right: auto; /* 가장 왼쪽 정렬 */
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0; /* ✅ 줄어들지 않도록 */
+  margin-right: auto; /* ✅ 왼쪽에 고정시키는 핵심 */
+}
+
+.logo-img {
+  width: 60px;
+  height: 60px;
+}
+
+.logo-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #111;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tab-wrapper {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex: 1;
+}
+
+.logo-desc {
+  font-size: 0.75rem;
+  color: #707070;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.01em;
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+  .tab-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 1.5rem 1rem;
+  }
+
+  .tab {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .logo-img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo-title {
+    font-size: 1rem;
+  }
+
+  .logo-desc {
+    font-size: 0.7rem;
+  }
+}
+
+.user-hover-wrap {
+  position: relative;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+}
+
+.login-section {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logout-hover-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.logout-hover-menu button {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.login-btn {
+  padding: 8px 16px;
+  border: none;
+  background: #2563eb; /* 기본 파란 배경 */
+  color: white; /* 기본 흰 글씨 */
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background: #1e49c4; /* hover 시 어두운 파랑 */
+  color: white; /* 글씨 그대로 흰색 유지 */
+}
+
+.disabled-tab {
+  pointer-events: none; /* 클릭 방지 */
+  opacity: 0.5; /* 흐리게 */
+  cursor: not-allowed; /* 마우스 커서 변경 */
+}

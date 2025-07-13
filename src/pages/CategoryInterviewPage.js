@@ -1,12 +1,15 @@
-import React from "react";
+{/*import React from "react";
 import "./CommonStyles.css"; 
-import Header from "./components/Header";
+import Header from "../components/Header"; // Assuming you have a Header component
+import { useAuth } from "../context/AuthContext"; 
+
 function CategoryInterviewPage() {
+  const { user, logout } = useAuth();
   return (
     <div className="select-page-container">
       <div className="bar"></div>
       <div className="select-page-card">
-        <Header />
+        <Header user={user} logout={logout} /> 
         <hr className="hero-divider" />
 
         <div className="resume-content-box">
@@ -31,3 +34,4 @@ function CategoryInterviewPage() {
 }
 
 export default CategoryInterviewPage;
+*/}

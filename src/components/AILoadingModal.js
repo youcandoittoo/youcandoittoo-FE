@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoadingModal.css";
 
-function LoadingModal({ onCancel }) {
+function AILoadingModal({ onCancel }) {
   return (
     <div className="loading-overlay">
       <div className="loading-box">
@@ -18,4 +18,4 @@ function LoadingModal({ onCancel }) {
   );
 }
 
-export default LoadingModal;
+export default AILoadingModal;

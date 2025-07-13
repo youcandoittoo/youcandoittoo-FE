@@ -1,115 +1,33 @@
-/* 상단 네비게이션 */
-.main-header {
-  width: 100%;
-  background: #e7e7f7;
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.header-inner {
-  height: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 18px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.source-text,.small-text {
-  font-size: 8px;
-  color: #666;
-  display: flex;
-  justify-content: flex-end; /* 오른쪽 정렬 */
-  align-items: center;
-  width: 100%;
-  font-weight: 500;
-}
-.small-text{
-  display: flex;
-  justify-content: start; /* 오른쪽 정렬 */
-  align-items: center;
-  width: 100%;
-}
-.logo-area {
-  display: flex;
-  align-items: center;
-}
-logo-img {
-  width: 80px;
-  height: 80px;
-}
-.logo-title {
-  font-weight: bold;
-  font-size: 20px;
-  color: #111;
-}
-.logo-desc{
-  font-size:12px;
-  color: #707070;
-  font-weight: 500;
-  margin-top:2px;
-  letter-spacing: 0.01em;
-}
-.nav-menu {
-    font-size: 20px;
-  display: flex;
-  gap: 32px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-.nav-link {
-  color: #444;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-  position: relative;
-  padding: 0 12px; /* 선이 너무 가까워지지 않도록 여백 추가 */
+/* 페이지 블러 효과 */
+.blur-background {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
 }
 
-/* 세로 구분선 */
-.nav-link:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  right: 0;
+/* 로그인 카드 오버레이 */
+.auth-card-overlay {
+  position: fixed;
   top: 50%;
-  transform: translateY(-50%);
-  height: 18px;
-  width: 3px;
-  background-color: #ccc;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
 }
 
-.nav-link:hover {
-  color: #2563eb;
-}
-
-.login-btn {
-  background: #111;
-  color: #fff;
-  border-radius: 22px;
-  padding: 8px 28px;
-  font-weight: 600;
-  font-size: 17px;
+/* 닫기 버튼 */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  background: none;
   border: none;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  transition: background 0.2s;
-}
-.login-btn:hover {
-  background: #2563eb;
+  cursor: pointer;
 }
 
-.app-container {
-  padding: 40px;
-  font-family: 'Noto Sans KR', sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
-   background: rgba(208, 216, 226, 0.3);
-}
-.app-container {
-  padding: 40px;
-  font-family: sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
+.hero-section {
+  text-align: center;
+  margin-bottom: 35px;
 }
 
 .big-logo {
@@ -123,56 +41,88 @@ logo-img {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.hero-section {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-/* 타자기 효과 */
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes typing {
-  from { width: 0ch; }
-  to { width: 8.5ch; } /* ← 글자 수 만큼만 커지도록 설정 */
-}
-
-.blue-text {
-  color: #2563eb;
-  display: inline-block;
+/* Typing: ambitious */
+.blue-text, .blue-text2 {
+  position: relative;
+  display: inline-flex;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 3px solid #2563eb;
-  animation: typing 2s steps(9, end) forwards, blink 0.75s step-end infinite;
   font-size: inherit;
+  line-height: 1.3;
   vertical-align: baseline;
-  line-height: inherit;
-  font-family: inherit;
+  color: #2563eb;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes typing2 {
-  from { width: 0ch; }
-  to { width: 14.5ch; }
+
+/* 공통 커서 기본 스타일 */
+.blue-text::after,
+.blue-text2::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0.05em; 
+  width: 2px;              /* 커서 두께 조절 */
+  height: 100%;            /* 텍스트 높이와 일치 */
+  background-color: #2563eb;
+  animation: cursor-blink 12s steps(1, end) infinite;
+  opacity: 0;
 }
-@keyframes blink {
-  50% { border-color: transparent; }
+
+/* blue-text 타이핑/삭제 타이밍 */
+.blue-text::after {
+  animation: cursor-blink 12s steps(1, end) infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 16.6% { opacity: 1; }   /* 타이핑 중 */
+  16.6%, 66.6% { opacity: 0; }/* 유지 중 */
+  66.6%, 83.3% { opacity: 1; }/* 삭제 중 */
+  83.3%, 100% { opacity: 0; } /* 삭제 완료 */
+}
+
+/* blue-text 애니메이션 (ambitious) */
+@keyframes typing1 {
+  0%     { width: 0ch; }
+  16.6%  { width: 8.5ch; }   /* 0~2s: 타이핑 */
+  66.6%  { width: 8.5ch; }   /* 2~8s: 유지 */
+  83.3%  { width: 0ch; }     /* 8~10s: 삭제 */
+  100%   { width: 0ch; }
+}
+.blue-text {
+  animation: typing1 12s steps(9, end) infinite;
+  animation-fill-mode: both;
+}
+
+/* blue-text2 타이핑/삭제 타이밍 */
+.blue-text2::after {
+  animation: cursor-blink2 12s steps(1, end) infinite;
+}
+
+@keyframes cursor-blink2 {
+   0%, 16.6%    { opacity: 0; }  /* 대기 */
+  16.6%, 66.6% { opacity: 1; }  /* 타이핑 + 유지 */
+  66.6%, 83.3% { opacity: 0; }  /* 🔕 blue-text 삭제 중 (8~10s) → 커서 숨김 */
+  83.3%, 100%  { opacity: 1; }  /* 삭제 시작 (10~12s) */
+}
+
+/* blue-text2 애니메이션 (forward-thinking) */
+@keyframes typing2 {
+  0%     { width: 0ch; }
+  16.6%  { width: 0ch; }
+  33.3%  { width: 14.5ch; }   /* 2~4s: 타이핑 */
+  66.6%  { width: 14.5ch; }   /* 4~10s: 유지 */
+  83.3%  { width: 14.5ch; }
+  100%   { width: 0ch; }      /* 10~12s: 삭제 */
 }
 .blue-text2 {
-  color: #2563eb;
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 3px solid #2563eb;
-  animation: typing2 2.5s steps(17, end) forwards, blink 0.75s step-end infinite;
-  font-size: inherit;
-  vertical-align: baseline;
-  line-height: inherit;
-  font-family: inherit;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  animation: typing2 12s steps(17, end) infinite;
+  animation-fill-mode: both;
 }
+
+
+
+
 
 .start-btn{
   background: #2563eb;
@@ -191,6 +141,22 @@ logo-img {
   background: #111;
 }
 
+/* 설명 링크 */
+.hero-desc-link {
+  width: 100%;
+  text-align: center;
+  margin: 28px 0 0 0;
+  font-size: 1.1rem;
+  color: #222;
+  font:bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.underline {
+  text-decoration: underline;
+  color:#2563eb
+}
+
 /* 구분선 */
 .hero-divider {
   border: none;
@@ -207,10 +173,12 @@ logo-img {
   width: 100%;
   margin-bottom: 32px;
 }
+
 .info-texts {
   flex: 1 1 0;
   min-width: 0;
 }
+
 .infor-desc-title {
   font-size: 2rem;
   font-weight: bold;
@@ -226,50 +194,36 @@ logo-img {
   text-align: left;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
-.infor-desc {
-  text-align: left;
-  font-size: 1rem;
-  font-weight: 600;
-  color:#5c5c5c;
-  margin-bottom: 0;
-  line-height: 1.6;
-}
-.info-img-wrap {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.info-big-img {
-  width: 290px;
-  height: 400px;
-  max-width: 30vw;
 
-  border-radius: 18px;
-  background: #fafaff;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-/* 설명 링크 */
-.hero-desc-link {
-  width: 100%;
-  text-align: center;
-  margin: 28px 0 0 0;
-  font-size: 1.1rem;
-  color: #222;
-  font:bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.underline {
-  text-decoration: underline;
-  color:#2563eb
-}
 .infor-desc {
   text-align: left;
   width: 100%;
   margin-left: 0;
-  justify-content: flex-start;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #5c5c5c;
+  line-height: 1.6;
+  justify-content: flex-start; /* ❓ 이 속성은 flex item에만 의미 있음 */
 }
+
+
+.video-crop-wrapper {
+  width: 300px;         /* 보여줄 영역 너비 */
+  height: 300px;        /* 보여줄 영역 높이 */
+  overflow: hidden;     /* 넘치는 부분은 잘라냄 */
+  position: relative;
+  border-radius: 12px;
+}
+
+.cropped-video {
+  width: 600px;               /* 원본보다 크게 설정 (중앙 확대) */
+  height: auto;
+  position: absolute;
+  left: -150px;               /* 영상의 왼쪽을 잘라내고 중앙만 보이게 */
+  top: 0;
+}
+
 .stats-section {
   display: flex;
   justify-content: space-between;
@@ -306,29 +260,36 @@ logo-img {
   justify-content: left;
 }
 
-.custom-btn {
-  font-size: 1.2rem;
-  font-weight: bold;
-  background: #5b5bf7;
-  color: #fff;
-  border: none;
-  border-radius: 22px;
-  padding: 10px 32px;
-  cursor: pointer;
-  transition: background 0.2s;
+.hero-section,
+.info-image-section,
+.stats-section,
+.resume-section,
+.jobposting-section {
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
 }
 
-.custom-card {
-  border: 1px solid #eee;
-  border-radius: 12px;
-  margin: 32px 0;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  align-items: center;
-  padding: 24px;
+.small-text {
+  font-size: 0.75rem;     /* 기존 0.9rem → 작게 */
+  color: #666;
+  margin-top: -8px;       /* 상단과 더 붙도록 (또는 줄이기) */
+  margin-bottom: 8px;     /* 아래 요소와 간격 조절 (필요시) */
+}
+
+
+.resume-flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.resume-texts {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .card-title {
@@ -339,20 +300,52 @@ logo-img {
 
 .card-desc1{
   font-size: 19px;
-
 }
 
-.card-desc {
-  font-size: 14px;
-  margin-bottom: 12px;
+.card-desc3 {
+  font-size: 15px;
+  margin-top: 20px; /* 위쪽 간격 줄이기 */
+
   color :#444;
-
 }
-.card-list {
-  font-size: 14px;
-  padding-left: 16px;
-  line-height: 1.6;
-  list-style: none;
+
+.feature-flow-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;  /* 좌우 간격 확보 */
+  gap: 64px;
+  margin-top: 60px;
+  flex-wrap: nowrap;               /* ✅ 줄바꿈 방지: 오른쪽으로 붙게 유지 */
+}
+
+/* 왼쪽 텍스트 설명 */
+.feature-bullets {
+  flex: 0 0 480px;                 /* ✅ 너비 고정 (균형 유지를 위함) */
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
+  color: #111;
+  list-style-position: inside;
+}
+
+.feature-bullets li {
+  margin-bottom: 14px;
+}
+
+/* 오른쪽 StepFlow */
+.stepflow-wrapper {
+  flex: 0 0 480px;                 /* ✅ 고정 크기 + 오른쪽에 딱 붙도록 */
+  margin-left: auto;              /* ✅ 오른쪽 정렬 핵심 */
+}
+
+.card-img {
+  width: 320px;
+  margin-top: 60px;
+  max-width: 40vw;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 /* 기본 상태: 숨김 */
@@ -368,112 +361,33 @@ logo-img {
   transform: translateY(0);
 }
 
-
-.resume-flex {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 40px;
-  width: 100%;
+.custom-btn {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #5b5bf7;
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 10px 32px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
-
-.resume-texts {
-  flex: 1 1 0;
-  min-width: 0;
-}
-
-.card-img {
-  width: 320px;
-  margin-top: 60px;
-  max-width: 40vw;
-  border-radius: 16px;
-  object-fit: cover;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-
-.custom-card.hero-card {
-  max-width: 950px;      /* 카드 최대 너비 줄이기 */
-  margin: 40px auto;     /* 가운데 정렬 */
-  padding: 48px 48px 40px 48px; /* 좌우 패딩 늘리기 */
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0;
-}
-
-.hero-section,
-.info-image-section,
-.stats-section,
-.resume-section,
-.jobposting-section {
-  align-items: flex-start;
-  text-align: left;
-  width: 100%;
-}
-
 
 .stats-section {
-  flex-direction: row;
-  justify-content: center;
+  display: flex;
+  justify-content: center;        /* ✅ 가로 중앙 정렬 */
+  align-items: flex-start;        /* 상단 기준 정렬 (또는 center도 가능) */
   gap: 48px;
   width: 100%;
   max-width: 900px;
+  margin: 0 auto;                 /* ✅ 섹션 자체를 중앙으로 */
+  padding: 20px 0;
+  text-align: center;             /* ✅ 텍스트까지 가운데 정렬 */
 }
+
 
 .stats-section > div {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.card-flow {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto auto;
-  gap: 40px 80px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  margin-top: 60px;
-}
-
-.step-card {
-  width: 220px;
-  background-color: #e8fbe8;
-  padding: 20px;
-  border-radius: 40px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  text-align: center;
-  font-weight: 500;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
-}
-
-.step-card.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.arrow {
-  position: absolute;
-  font-size: 24px;
-  color: #444;
-}
-
-/* 정확한 위치의 화살표 (px는 카드 기준 조정 가능) */
-.arrow.right {
-  top: 20px;
-  left: 280px;
-}
-.arrow.down {
-  top: 79px;
-  left: 460px;
-}
-.arrow.left {
-  top: 140px;
-  left: 280px;
 }

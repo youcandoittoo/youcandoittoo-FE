@@ -1,7 +1,13 @@
-import React from "react";
-import { useEffect } from "react";
-import {useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./MainPage.css";
+import "./CommonStyles.css";
+import Header from "../components/Header";
+import ParticleBackground from "../components/ParticleBackground";
+import AuthCard from "../components/AuthCard";
+import { useAuth } from "../context/AuthContext";
+import StepFlow from "../components/StepFlow";
+import StepFlow1 from "../components/StepFlow1";
 
 function Button({ children, ...props }) {
   return (
@@ -11,182 +17,285 @@ function Button({ children, ...props }) {
   );
 }
 
-function Card({ children }) {
-  return <div className="custom-card">{children}</div>;
-}
-
-function CardContent({ children }) {
-  return <div>{children}</div>;
-}
-
 function MainPage() {
   const navigate = useNavigate();
+  const { user, login, logout } = useAuth(); // 전역 user 상태
+  const [showAuthCard, setShowAuthCard] = useState(false);
+
+  const handleLoginSuccess = (userInfo) => {
+    console.log("로그인 성공: ", userInfo);
+    login(userInfo); // context 전역 상태에 저장
+    setShowAuthCard(false);
+  };
+
   useEffect(() => {
   const items = document.querySelectorAll(".fade-item");
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
           entry.target.classList.add("show");
-        }, index * 200); // 항목별 지연 시간
-      }
-    });
-  }, { threshold: 0.3 });
+        } else {
+          entry.target.classList.remove("show"); // ✅ 다시 사라질 때 제거
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
 
-  items.forEach(item => observer.observe(item));
-
+  items.forEach((item) => observer.observe(item));
   return () => observer.disconnect();
 }, []);
+
   return (
-    <div className="app-container">
-      <header className="main-header">
-        <div className="source-text">
-          © 2025 야 너도 할 수 있어_AI면접 프로그램 | Designed by Soonchunhyang Univ.
+    <>
+      {/* 로그인 카드 오버레이 */}
+      {showAuthCard && (
+        <div className="auth-card-overlay">
+          <AuthCard
+            onLoginSuccess={handleLoginSuccess}
+            onClose={() => setShowAuthCard(false)}
+          />
+          <button className="close-btn" onClick={() => setShowAuthCard(false)}>
+            ×
+          </button>
         </div>
-        <div className="header-inner">
-          <div className="logo-area">
-            <img src="/logo192.png" alt="Logo" className="logo-img" />
-            <div>
-              <div className="logo-title">You Can Do It</div>
-              <div className="logo-desc">A Global Interview Intelligence Platform</div>
-            </div>
+      )}
+      <ParticleBackground />
+      <div
+        className={`interview-page-wrapper ${
+          showAuthCard ? "blur-background" : ""
+        }`}
+      >
+        <div className="bar-background"></div>
+        <div className="content-wrapper">
+          <div className="custom-card">
+            <Header
+              user={user}
+              logout={logout}
+              onLoginClick={() => setShowAuthCard(true)}
+            />
+            <section className="hero-section">
+              <div className="big-logo">
+                Trusted by <span className="blue-text">ambitious</span> job
+                seekers
+                <br />
+                and <span className="blue-text2">forward-thinking</span> teams
+              </div>
+              <Button
+                className="start-btn"
+                onClick={() => {
+                  if (!user) {
+                    alert("로그인 후 이용 가능합니다.");
+                    setShowAuthCard(true); // 로그인 카드 열기
+                  } else {
+                    navigate("/select"); // 정상 이동
+                  }
+                }}
+              >
+                Start
+              </Button>
+              <div className="hero-desc-link">
+                <h5>
+                  “<span className="underline">AI Interview</span>, Built for
+                  the <span className="underline">Future of Work</span>.”
+                </h5>
+              </div>
+              <hr className="hero-divider" />
+
+              <section className="info-image-section">
+                <div className="info-texts">
+                  <h2 className="infor-desc-title">
+                    AI Interviews, Built for Growth
+                  </h2>
+                  <h4 className="infor-desc-sub">
+                    Tailored for students, job
+                    <br /> seekers, and career changers.
+                  </h4>
+                  <p className="infor-desc">
+                    Launched in collaboration with universities,
+                    <br />
+                    AI Interview is an AI-powered platform that helps users
+                    <br />
+                    build confidence, practice effectively, and receive
+                    <br />
+                    objective feedback.
+                    <br />
+                    From first-time job seekers to professionals preparing for a
+                    career pivot,
+                    <br />
+                    we deliver smart, structured interview experiences—
+                    <br />
+                    anytime, anywhere.
+                  </p>
+                </div>
+                <div className="video-crop-wrapper">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="cropped-video"
+                  >
+                    <source src="ai-robot-moving.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </section>
+            </section>
+
+            <section className="stats-section">
+              <div>
+                <p className="stats-number">100+</p>
+                <p className="stats-desc">Mock interviews tested</p>
+              </div>
+              <div>
+                <p className="stats-number">5+</p>
+                <p className="stats-desc">Partnering majors / professors</p>
+              </div>
+              <div>
+                <p className="stats-number">2025</p>
+                <p className="stats-desc">Target launch year</p>
+              </div>
+            </section>
+
+            <hr className="hero-divider" />
+
+            <section className="resume-section">
+              <div className="small-text">*Introduction to Features 01</div>
+              <div className="resume-flex">
+                <div className="resume-texts">
+                  <h2 className="card-title">
+                    AI Interview Based on Resume <br />
+                    (Self-Introduction)
+                  </h2>
+                  <h3 className="card-desc1">
+                    Tailored for students, job
+                    <br /> seekers, and career changers.
+                  </h3>
+                  <p className="card-desc3">
+                    Our AI analyzes your resume or self-introduction
+                    (자기소개서) to generate highly
+                    <br />
+                    personalized interview questions.
+                    <br />
+                    You’ll be asked questions based on your experiences,
+                    strengths, and goals—just like in a real interview.
+                    <br />
+                    Whether you're applying for internships or full-time roles,
+                    this feature helps you
+                    <br />
+                    prepare authentic and relevant answers.
+                  </p>
+                  <div className="feature-flow-wrapper">
+                    <ul className="feature-bullets">
+                      <li>
+                        <strong>Personalized</strong> questions from your resume
+                      </li>
+                      <li>
+                        Practice expressing your{" "}
+                        <strong>experiences and goals</strong>
+                      </li>
+                      <li>
+                        Receive AI feedback on{" "}
+                        <strong>tone, clarity, confidence</strong>
+                      </li>
+                      <li>
+                        <strong>Ideal for</strong> students, job seekers,
+                        portfolio users
+                      </li>
+                    </ul>
+                    <div className="stepflow-wrapper">
+                      <StepFlow />
+                    </div>
+                  </div>
+                </div>
+                <img
+                  src="/resume-interview.png"
+                  alt="Resume Interview"
+                  className="card-img"
+                />
+              </div>
+            </section>
+            <hr className="hero-divider" />
+
+            <section className="jobposting-section">
+              <div className="small-text">*Introduction to Features 02</div>
+              <div className="resume-flex">
+                <div className="resume-texts">
+                  <h2 className="card-title">
+                    AI Interview Based on Job Posting
+                  </h2>
+                  <h3 className="card-desc1">
+                    Instantly generate interview
+                    <br />
+                    questions based on your target
+                    <br />
+                    job description.
+                  </h3>
+                  <p className="card-desc3">
+                    Our AI analyzes the job posting you provide—extracting key
+                    responsibilities,
+                    <br />
+                    qualifications, and keywords—to create highly relevant
+                    interview questions tailored to
+                    <br />
+                    that specific role.
+                    <br />
+                    This helps you prepare for the actual expectations of
+                    employers, not just general interviews.
+                    <br />
+                    Ideal for applicants who want to deeply align their answers
+                    with a target job.
+                  </p>
+                  <div
+                    className="feature-flow-wrapper"
+                    style={{ marginTop: "150px" }}
+                  >
+                    <ul className="feature-bullets">
+                      <li>
+                        Upload or paste any<strong>job posting</strong> (PDF,
+                        text, or link)
+                      </li>
+                      <li>
+                        Automatically generate{" "}
+                        <strong>job-specific interview questions</strong>
+                      </li>
+                      <li>
+                        Practice answers{" "}
+                        <strong>aligned with role requirements</strong>
+                      </li>
+                      <li>
+                        Receive <strong>AI feedback</strong> on{" "}
+                        <strong>relevance</strong>and <strong>clarity</strong>
+                      </li>
+                      <li>
+                        Greate for <strong>tailored preparation</strong> before
+                        actual interviews
+                      </li>
+                    </ul>
+                    <div className="stepflow-wrapper">
+                      <StepFlow1 />
+                    </div>
+                  </div>
+                </div>
+                <img
+                  src="/jobposting-interview.png"
+                  alt="Job Posting Interview"
+                  className="card-img"
+                />
+              </div>
+            </section>
           </div>
-          <nav className="nav-menu">
-            <a href="#" className="nav-link">About</a>
-            <a href="#" className="nav-link">Work</a>
-            <a href="#" className="nav-link">Services</a>
-            <a href="#" className="nav-link">Pricing</a>
-          </nav>
-          <Button className="login-btn">Login</Button>
+          <footer className="footer">
+            © 2025 야 너도 할 수 있어_AI면접 프로그램 | Designed by
+            Soonchunhyang Univ.
+          </footer>
         </div>
-      </header>
-      <div className="custom-card hero-card">
-        <section className="hero-section">
-          <div className="big-logo">
-            Trusted by <span className="blue-text">ambitious</span> job seekers<br />
-            and <span className="blue-text2">forward-thinking</span> teams
-          </div>
-          <div className="hero-btn-wrap">
-            <Button className="start-btn" onClick={() => navigate("/select")}>Start</Button>
-          </div>
-          <div className="hero-desc-link">
-            <h5 className="desc-link">
-              “<span className="underline">AI Interview</span>, Built for the <span className="underline">Future of Work</span>.”
-            </h5>
-          </div>
-          <hr className="hero-divider" />
-
-          <section className="info-image-section">
-            <div className="info-texts">
-              <h2 className="infor-desc-title">AI Interviews, Built for Growth</h2>
-              <h4 className="infor-desc-sub">Tailored for students, job<br/> seekers, and career changers.</h4>
-              <p className="infor-desc">
-                Launched in collaboration with universities,<br />
-                AI Interview is an AI-powered platform that helps users<br />
-                build confidence, practice effectively, and receive<br />
-                objective feedback.<br />
-                From first-time job seekers to professionals preparing for a
-                career pivot,
-                <br />we deliver smart, structured interview experiences—<br />
-                anytime, anywhere.
-              </p>
-            </div>
-            <img
-              src="/ai-robot.png"
-              alt="AI Interview Illustration"
-              className="info-big-img"
-            />
-          </section>
-        </section>
-
-        <section className="stats-section">
-          <div>
-            <p className="stats-number">3,000+</p>
-            <p className="stats-desc">Interview sessions analyzed</p>
-          </div>
-          <div>
-            <p className="stats-number">20+</p>
-            <p className="stats-desc">Partner universities and institutions</p>
-          </div>
-          <div>
-            <p className="stats-number">15,000+</p>
-            <p className="stats-desc">
-              Users served<br />
-              Since 2025 Continuous AI-driven growth
-            </p>
-          </div>
-        </section>
-        <hr className="hero-divider" />
-
-        <section className="resume-section">
-          <div className="small-text">*Introduction to Features 01</div>
-          <div className="resume-flex">
-            <div className="resume-texts">
-              <h2 className="card-title">
-                AI Interview Based on Resume <br />(Self-Introduction)
-              </h2>
-              <h3 className="card-desc1">Tailored for students, job<br /> seekers, and career changers.</h3>
-              <p className="card-desc">
-                Our AI analyzes your resume or self-introduction (자기소개서) to generate highly<br />
-                personalized interview questions.<br />
-                You’ll be asked questions based on your experiences, strengths, and goals—just like in a real interview.<br />
-                Whether you're applying for internships or full-time roles, this feature helps you<br />
-                prepare authentic and relevant answers.
-              </p>
-             <div class="card-flow">
-              <div class="step-card fade-item">Upload your self-introduction</div>
-              <div class="step-card fade-item">Get tailored questions</div>
-              <div class="arrow right">→</div>
-              <div class="arrow down">↓</div>
-              <div class="step-card fade-item">Receive instant AI feedback</div>
-              <div class="step-card fade-item">Practice on video</div>
-              <div class="arrow down">↓</div>
-              <div class="arrow left">←</div>
-            </div>
-            </div>
-            <img
-              src="/resume-interview.png"
-              alt="Resume Interview"
-              className="card-img"
-            />
-          </div>
-        </section>
-        <hr className="hero-divider" />
-
-        <section className="jobposting-section">
-          <div className="small-text">*Introduction to Features 02</div>
-          <div className="resume-flex">
-            <div className="resume-texts">
-              <h2 className="card-title">
-                AI Interview Based on Job Posting
-              </h2>
-              <h3 className="card-desc1">
-                Instantly generate interview<br />questions based on your target<br />job description.
-              </h3>
-              <p className="card-desc">
-                Our AI analyzes the job posting you provide—extracting key responsibilities,<br />
-                qualifications, and keywords—to create highly relevant interview questions tailored to<br />
-                that specific role.<br />
-                This helps you prepare for the actual expectations of employers, not just general interviews.<br />
-                Ideal for applicants who want to deeply align their answers with a target job.
-              </p>
-              <ul className="card-list">
-                <li>➔ Upload job description</li>
-                <li>➔ Receive role-specific questions</li>
-                <li>➔ Practice on video</li>
-                <li>➔ Get AI-driven feedback</li>
-              </ul>
-            </div>
-            <img
-              src="/jobposting-interview.png"
-              alt="Job Posting Interview"
-              className="card-img"
-            />
-          </div>
-        </section>
       </div>
-    </div>
+    </>
   );
 }
+
 export default MainPage;

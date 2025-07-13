@@ -82,3 +82,22 @@
 }
 
 
+/* SelectInterviewPage 전용 wrapper */
+.interview-page-wrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* 상단 blue bar 배경 */
+
+
+/* 가운데 정렬된 전체 콘텐츠 */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1356px;   /* MainPage 기준과 동일 */
+  margin: 0 auto;
+  padding: 48px 48px 40px 48px; /* 좌우 여백 동일 */
+}
+
