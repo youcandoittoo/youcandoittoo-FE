@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// 상단 import는 동일
+import React, { useState, useEffect, useRef } from "react";
 import "./ResumeManagerPage.css";
 import Header from "../components/Header";
 import "../components/Header.css";
@@ -21,9 +22,19 @@ function ResumeManagerPage() {
   const [saveResult, setSaveResult] = useState(null);
   const { user, logout } = useAuth();
 
+  const contentRef = useRef(null);
+
   useEffect(() => {
     getResumes().then(setResumes);
   }, []);
+
+  useEffect(() => {
+    if (selectedResume && !isEditing && contentRef.current) {
+      setTimeout(() => {
+        contentRef.current.scrollTop = 0;
+      }, 30);
+    }
+  }, [selectedResume, isEditing]);
 
   const filteredResumes = resumes.filter((resume) => {
     const target = resume[searchOption]?.toLowerCase() || "";
@@ -59,7 +70,6 @@ function ResumeManagerPage() {
       setSelectedResume(null);
       setIsEditing(false);
     }
-    // 서버 연동이 있다면 여기에 API 호출 추가
   };
 
   return (
@@ -128,7 +138,6 @@ function ResumeManagerPage() {
                 >
                   <div className="resume-card-header">
                     <h3>{resume.title}</h3>
-                    
                   </div>
                   <p>
                     <strong>기업명:</strong> {resume.company}
@@ -141,20 +150,20 @@ function ResumeManagerPage() {
                   </p>
                   <p className="date">저장 날짜: {resume.createdAt}</p>
                   <span
-                      className="delete-icon"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (
-                          window.confirm(
-                            "자소서를 삭제하면 복구하지 못합니다. 정말 삭제하시겠습니까?"
-                          )
-                        ) {
-                          handleDelete(resume.id);
-                        }
-                      }}
-                    >
-                      🗑️
-                    </span>
+                    className="delete-icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (
+                        window.confirm(
+                          "자소서를 삭제하면 복구하지 못합니다. 정말 삭제하시겠습니까?"
+                        )
+                      ) {
+                        handleDelete(resume.id);
+                      }
+                    }}
+                  >
+                    🗑️
+                  </span>
                 </div>
               ))}
             </div>
@@ -170,87 +179,92 @@ function ResumeManagerPage() {
                 ></div>
 
                 <div className="resume-modal">
-                  <label>제목</label>
-                  {isEditing ? (
-                    <input
-                      className="input-field"
-                      value={selectedResume.title}
-                      onChange={(e) =>
-                        setSelectedResume((prev) => ({
-                          ...prev,
-                          title: e.target.value,
-                        }))
-                      }
-                    />
-                  ) : (
-                    <div className="read-only-field">
-                      {selectedResume.title}
-                    </div>
-                  )}
+                  <div className="resume-modal-body">
+                    <div className="resume-meta">
+                      <label>제목</label>
+                      {isEditing ? (
+                        <input
+                          className="input-field"
+                          value={selectedResume.title}
+                          onChange={(e) =>
+                            setSelectedResume((prev) => ({
+                              ...prev,
+                              title: e.target.value,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <div className="read-only-field">
+                          {selectedResume.title}
+                        </div>
+                      )}
 
-                  <label>기업명</label>
-                  {isEditing ? (
-                    <input
-                      className="input-field"
-                      value={selectedResume.company}
-                      onChange={(e) =>
-                        setSelectedResume((prev) => ({
-                          ...prev,
-                          company: e.target.value,
-                        }))
-                      }
-                    />
-                  ) : (
-                    <div className="read-only-field">
-                      {selectedResume.company}
-                    </div>
-                  )}
+                      <label>기업명</label>
+                      {isEditing ? (
+                        <input
+                          className="input-field"
+                          value={selectedResume.company}
+                          onChange={(e) =>
+                            setSelectedResume((prev) => ({
+                              ...prev,
+                              company: e.target.value,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <div className="read-only-field">
+                          {selectedResume.company}
+                        </div>
+                      )}
 
-                  <label>직무</label>
-                  {isEditing ? (
-                    <input
-                      className="input-field"
-                      value={selectedResume.position}
-                      onChange={(e) =>
-                        setSelectedResume((prev) => ({
-                          ...prev,
-                          position: e.target.value,
-                        }))
-                      }
-                    />
-                  ) : (
-                    <div className="read-only-field">
-                      {selectedResume.position}
+                      <label>직무</label>
+                      {isEditing ? (
+                        <input
+                          className="input-field"
+                          value={selectedResume.position}
+                          onChange={(e) =>
+                            setSelectedResume((prev) => ({
+                              ...prev,
+                              position: e.target.value,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <div className="read-only-field">
+                          {selectedResume.position}
+                        </div>
+                      )}
                     </div>
-                  )}
 
-                  <label>내용</label>
-                  {isEditing ? (
-                    <textarea
-                      className="textarea-field"
-                      value={selectedResume.content}
-                      onChange={(e) =>
-                        setSelectedResume((prev) => ({
-                          ...prev,
-                          content: e.target.value,
-                        }))
-                      }
-                    />
-                  ) : (
-                    <div
-                      className="read-only-field scrollable"
-                      style={{ whiteSpace: "pre-line" }}
-                    >
-                      {selectedResume.content}
+                    <div className="resume-content">
+                      <label>자기소개서</label>
+                      {isEditing ? (
+                        <textarea
+                          className="textarea-field"
+                          value={selectedResume.content}
+                          onChange={(e) =>
+                            setSelectedResume((prev) => ({
+                              ...prev,
+                              content: e.target.value, // ✅ 정확하게 content 갱신
+                            }))
+                          }
+                        />
+                      ) : (
+                        <div
+                          className="read-only-field scrollable"
+                          ref={contentRef}
+                          style={{ whiteSpace: "pre-line" }}
+                        >
+                          {selectedResume.content}
+                        </div>
+                      )}
                     </div>
-                  )}
-
-                  <p className="date">저장 날짜: {selectedResume.createdAt}</p>
+                  </div>
 
                   <div className="modal-buttons">
                     {!isEditing ? (
                       <button
-                        className="start-btn"
+                        className="edit-btn"
                         onClick={() => setIsEditing(true)}
                       >
                         수정하기

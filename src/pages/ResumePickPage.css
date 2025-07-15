@@ -28,3 +28,35 @@
   align-items: center;
   margin-bottom: 12px;
 }
+
+.resume-modal {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;                /* 기존 90% → ✅ 확대 */
+  max-width: 960px;          /* 기존 600px → ✅ 더 넓게 */
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.resume-modal-body {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.resume-meta {
+  flex: 0 0 200px;
+  min-width: 180px;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}

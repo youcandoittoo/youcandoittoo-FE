@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import "../components/Header.css";
 import "./CommonStyles.css";
 import "./ResumePickPage.css";
+import "./ResumeManagerPage.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ParticleBackground from "../components/ParticleBackground";
@@ -114,28 +115,42 @@ function ResumePickPage() {
                   onClick={() => setSelectedResume(null)}
                 ></div>
                 <div className="resume-modal">
-                  <label>제목</label>
-                  <div className="read-only-field">{selectedResume.title}</div>
+                  <div className="resume-modal-body">
+                    <div className="resume-meta">
+                      <label>제목</label>
+                      <div className="read-only-field">
+                        {selectedResume.title}
+                      </div>
 
-                  <label>기업명</label>
-                  <div className="read-only-field">
-                    {selectedResume.company}
+                      <label>기업명</label>
+                      <div className="read-only-field">
+                        {selectedResume.company}
+                      </div>
+
+                      <label>직무</label>
+                      <div className="read-only-field">
+                        {selectedResume.position}
+                      </div>
+                    </div>
+
+                    <div className="resume-content">
+                      <label>자기소개서</label>
+                      <div className="read-only-field scrollable">
+                        {selectedResume.content}
+                      </div>
+
+                      <p className="date">
+                        저장 날짜: {selectedResume.createdAt}
+                      </p>
+
+                      <button
+                        className="start-btn"
+                        onClick={handleStartInterview}
+                      >
+                        AI 면접 시작
+                      </button>
+                    </div>
                   </div>
-
-                  <label>직무</label>
-                  <div className="read-only-field">
-                    {selectedResume.position}
-                  </div>
-
-                  <label>내용</label>
-                  <div className="read-only-field">
-                    {selectedResume.content}
-                  </div>
-
-                  <p className="date">저장 날짜: {selectedResume.createdAt}</p>
-                  <button className="start-btn" onClick={handleStartInterview}>
-                    AI 면접 시작
-                  </button>
                 </div>
               </>
             )}
