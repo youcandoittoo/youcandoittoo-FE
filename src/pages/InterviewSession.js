@@ -23,23 +23,37 @@ function InterviewSession() {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [feedback, setFeedback] = useState({});
   const [transcript, setTranscript] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const [chatVisible, setChatVisible] = useState(true);
+  const finalTranscriptRef = useRef("");
+  const chatWindowRef = useRef(null);
   const webcamRef = useRef(null);
   const recognitionRef = useRef(null);
   const { user, logout } = useAuth();
   const [exitConfirmVisible, setExitConfirmVisible] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false); // ✅ 전체화면 상태
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const navigate = useNavigate();
+  const resizingRef = useRef(false);
 
   const handleNextQuestion = async () => {
     if (currentQuestion < 4) {
+      setChatHistory((prev) => [
+        ...prev,
+        { type: "question", text: questionList[currentQuestion] },
+        { type: "answer", text: finalTranscriptRef.current.trim() },
+      ]);
+
       const nextIndex = currentQuestion + 1;
-      const nextQuestion = await fetchAIQuestion(nextIndex, transcript);
+      const nextQuestion = await fetchAIQuestion(
+        nextIndex,
+        finalTranscriptRef.current
+      );
       setQuestionList((prev) => [...prev, nextQuestion]);
       setCurrentQuestion(nextIndex);
+      finalTranscriptRef.current = "";
       setTranscript("");
       window.speechSynthesis.cancel();
-
-      const newFeedback = await fetchAIFeedback(transcript);
+      const newFeedback = await fetchAIFeedback(finalTranscriptRef.current);
       setFeedback(newFeedback);
     } else {
       alert("모든 질문이 완료되었습니다!");
@@ -62,10 +76,24 @@ function InterviewSession() {
   }, []);
 
   useEffect(() => {
-    const utterance = new SpeechSynthesisUtterance(
-      questionList[currentQuestion] || ""
-    );
+    const question = questionList[currentQuestion];
+    if (!question) return;
+
+    // 1. 음성 인식 중지 (기존에 실행 중이라면)
+    recognitionRef.current?.stop();
+
+    const utterance = new SpeechSynthesisUtterance(question);
     utterance.lang = "ko-KR";
+
+    // 2. 질문 읽기 끝난 뒤 음성 인식 재시작
+    utterance.onend = () => {
+      try {
+        recognitionRef.current?.start();
+      } catch (e) {
+        console.warn("음성 인식 재시작 실패", e);
+      }
+    };
+
     window.speechSynthesis.speak(utterance);
   }, [currentQuestion, questionList]);
 
@@ -83,11 +111,18 @@ function InterviewSession() {
     recognition.continuous = true;
 
     recognition.onresult = (event) => {
-      let newTranscript = "";
+      let interimTranscript = "";
+
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        newTranscript += event.results[i][0].transcript;
+        const result = event.results[i];
+        if (result.isFinal) {
+          finalTranscriptRef.current += result[0].transcript + " ";
+        } else {
+          interimTranscript += result[0].transcript;
+        }
       }
-      setTranscript(newTranscript);
+
+      setTranscript(finalTranscriptRef.current + interimTranscript);
     };
 
     recognition.onerror = (event) => {
@@ -103,6 +138,59 @@ function InterviewSession() {
   const handleStopInterview = () => {
     recognitionRef.current?.stop();
     navigate("/select");
+  };
+
+  const handleDragStart = (e) => {
+    if (resizingRef.current) return;
+
+    const chatWindow = chatWindowRef.current;
+    const shiftX = e.clientX - chatWindow.getBoundingClientRect().left;
+    const shiftY =
+      e.clientY - chatWindow.getBoundingClientRect().top + window.scrollY;
+
+    const moveAt = (pageX, pageY) => {
+      chatWindow.style.left = pageX - shiftX + "px";
+      chatWindow.style.top = pageY - shiftY + "px";
+    };
+
+    const onMouseMove = (e) => {
+      moveAt(e.pageX, e.pageY);
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener(
+      "mouseup",
+      () => {
+        document.removeEventListener("mousemove", onMouseMove);
+      },
+      { once: true }
+    );
+  };
+
+  const handleResizeStart = (e) => {
+    e.stopPropagation();
+    resizingRef.current = true;
+    const chatWindow = chatWindowRef.current;
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startWidth = chatWindow.offsetWidth;
+    const startHeight = chatWindow.offsetHeight;
+
+    const onMouseMove = (e) => {
+      const newWidth = startWidth + (e.clientX - startX);
+      const newHeight = startHeight + (e.clientY - startY);
+      chatWindow.style.width = newWidth + "px";
+      chatWindow.style.height = newHeight + "px";
+    };
+
+    const onMouseUp = () => {
+      resizingRef.current = false;
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
   };
 
   return (
@@ -129,12 +217,6 @@ function InterviewSession() {
                 </div>
                 <div>
                   <button
-                    className="fullscreen-button"
-                    onClick={() => setIsFullscreen((prev) => !prev)}
-                  >
-                    {isFullscreen ? "전체화면 종료" : "전체화면 보기"}
-                  </button>
-                  <button
                     className="exit-button"
                     onClick={() => setExitConfirmVisible(true)}
                   >
@@ -148,9 +230,8 @@ function InterviewSession() {
               <div
                 className={`interview-grid ${isFullscreen ? "fullscreen" : ""}`}
               >
-                {/* 웹캠 */}
                 <div className="webcam-section">
-                  <h3>웹캠</h3>
+                  <span className="webcam-text">웹캠</span>
                   <Webcam
                     ref={webcamRef}
                     className="webcam-video"
@@ -165,7 +246,6 @@ function InterviewSession() {
                   </div>
                 </div>
 
-                {/* 질문 + 피드백 */}
                 <div className="qa-section">
                   <div className="progress-box">
                     <p>질문 {currentQuestion + 1} / 5</p>
@@ -181,7 +261,6 @@ function InterviewSession() {
                       {(((currentQuestion + 1) / 5) * 100).toFixed(0)}% 완료
                     </span>
                   </div>
-
                   <div className="question-box">
                     <h4>👨‍💼 면접관 질문</h4>
                     <hr className="hero-divider1" />
@@ -195,7 +274,6 @@ function InterviewSession() {
                       </button>
                     )}
                   </div>
-
                   <div className="feedback-box">
                     <div className="feedback-header">
                       <span>실시간 피드백</span>
@@ -203,11 +281,47 @@ function InterviewSession() {
                     <p>🧍‍♂️ 표정 분석: {feedback.expression}</p>
                     <p>🗣 목소리 분석: {feedback.voice}</p>
                   </div>
+                  <button
+                    className="fullscreen-button"
+                    onClick={() => setIsFullscreen((prev) => !prev)}
+                  >
+                    {isFullscreen ? "전체화면 종료" : "전체화면 보기"}
+                  </button>
+                  {!chatVisible && (
+                    <button
+                      className="chat-toggle-button"
+                      onClick={() => setChatVisible(true)}
+                    >
+                      채팅창 열기
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        {chatVisible && (
+          <div
+            className="floating-chat-window"
+            ref={chatWindowRef}
+            onMouseDown={handleDragStart}
+          >
+            <div className="chat-header">
+              <span>💬 면접 대화 기록</span>
+              <button onClick={() => setChatVisible(false)}>✕</button>
+            </div>
+            <div className="chat-scroll">
+              {chatHistory.map((msg, idx) => (
+                <div key={idx} className={`chat-bubble ${msg.type}`}>
+                  <strong>{msg.type === "question" ? "👨‍💼" : "🙋‍♀️"}</strong>{" "}
+                  {msg.text}
+                </div>
+              ))}
+            </div>
+            <div className="resizer" onMouseDown={handleResizeStart}></div>
+          </div>
+        )}
 
         {exitConfirmVisible && (
           <div className="confirm-overlay">
@@ -230,6 +344,7 @@ function InterviewSession() {
             </div>
           </div>
         )}
+
         <footer className="footer">
           © 2025 야 너도 할 수 있어_AI면접 프로그램 | Designed by Soonchunhyang
           Univ.
