@@ -9,6 +9,7 @@ import InterviewSession from "./pages/InterviewSession";
 import { AuthProvider } from "./context/AuthContext"; // 추가
 import ResumeManagerPage from "./pages/ResumeManagerPage";
 import ResumePickPage from "./pages/ResumePickPage";
+import RecordListPage from './pages/record/RecordListPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/interview-session" element={<InterviewSession />} />
           <Route path="/resume-manager" element={<ResumeManagerPage />} />
           <Route path="/resume-pick" element={<ResumePickPage />} />
+          <Route path="/record" element={<RecordListPage />} />
         </Routes>
       </Router>
     </AuthProvider>
