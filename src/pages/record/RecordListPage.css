@@ -1,9 +1,4 @@
 /* 컨테이너 */
-.interview-page-wrapper {
-  min-height: 100vh;
-  background: var(--color-brand);
-}
-
 .bar-background {
   height: 80px;
   background: linear-gradient(
@@ -26,11 +21,6 @@
   align-items: center;
   margin-bottom: 10px;
 }
-.record-title-bar h1 {
-  font-size: var(--font-size-title);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-}
 
 /* 리스트 컨테이너 */
 .record-list-container {
@@ -44,16 +34,18 @@
 /* 리스트 */
 .record-list-header {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1.5fr 2fr 1fr;
+  grid-template-columns: 1.7fr 1.5fr 1.8fr 2fr 1fr 5px;
   align-items: center;
-  padding: 18px var(--spacing-sm);
+  padding: 10px 80px; 
+  background: var(--color-bg-surface);
   color: var(--color-text-secondary);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-semibold);
-  border-top: 1px solid var(--color-border-default);
-  border-bottom: 1px solid var(--color-border-default);
-}
 
+
+  border-top: 2px solid var(--color-border-default);
+  border-bottom: 2px solid var(--color-border-default);
+}
 
 .record-list {
   max-height: 60vh;
@@ -84,18 +76,17 @@
   grid-template-columns: 2fr 1.5fr 1.5fr 2fr 1fr 40px;
   align-items: center;
   gap: 6px;
-  padding: 20px 18px;
-  margin: 10px 6px;
+  padding: 10px 40px;
+  margin: 10px 10px;
   border-radius: var(--radius-md);
   background-color: var(--color-bg-accent);
   color: var(--color-text-primary);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-caption);
   font-weight: var(--font-weight-regular);
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(65, 60, 220, 0.18);
-  transition: transform 0.06s ease, background-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.06s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .record-item:hover {
@@ -108,6 +99,11 @@
   font-size: var(--font-size-title);
   color: var(--color-text-secondary);
   text-align: center;
+}
+
+.record-list-header > span:last-child,
+.record-item > div:last-child {
+  text-align: right;
 }
 
 /* 반응형 */

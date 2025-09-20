@@ -61,7 +61,7 @@ function RecordListPage() {
 
             {/* 페이지 타이틀 */}
             <div className="record-title-bar">
-              <h1>면접 기록</h1>
+              <h2>면접 기록</h2>
             </div>
 
             <div className="record-list-container">

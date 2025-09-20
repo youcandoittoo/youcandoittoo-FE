@@ -1,4 +1,5 @@
 import React from "react";
+import 'C:/Users/youji/VisualStudioCode/LL_youcandoittoo_FE/youcandoittoo-FE/src/styles/theme.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import SelectInterviewPage from "./pages/SelectInterviewPage";
