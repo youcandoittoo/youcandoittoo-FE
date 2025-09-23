@@ -341,3 +341,24 @@
 .chat-toggle-button:hover {
   background-color: #e0d8ff;
 }
+
+/* 결과 확인용 임시 코드 추가 */
+.header-buttons {
+    display: flex;
+    gap: 12px; 
+}
+
+.result-btn {
+    background-color: var(--color-brand);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.result-btn:hover {
+    background-color: #352fdd; 
+}

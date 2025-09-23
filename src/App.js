@@ -1,5 +1,5 @@
 import React from "react";
-import 'C:/Users/youji/VisualStudioCode/LL_youcandoittoo_FE/youcandoittoo-FE/src/styles/theme.css';
+import './styles/theme.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import SelectInterviewPage from "./pages/SelectInterviewPage";
@@ -11,6 +11,8 @@ import { AuthProvider } from "./context/AuthContext"; // 추가
 import ResumeManagerPage from "./pages/ResumeManagerPage";
 import ResumePickPage from "./pages/ResumePickPage";
 import RecordListPage from './pages/record/RecordListPage';
+import RecordDetailPage from './pages/record/RecordDetailPage';
+import InterviewResultPage from './pages/interview/InterviewResultPage';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Route path="/resume-manager" element={<ResumeManagerPage />} />
           <Route path="/resume-pick" element={<ResumePickPage />} />
           <Route path="/record" element={<RecordListPage />} />
+          <Route path="/record/:recordId" element={<RecordDetailPage />} />
+          <Route path="/interview/result/:sessionId" element={<InterviewResultPage />} />
         </Routes>
       </Router>
     </AuthProvider>
