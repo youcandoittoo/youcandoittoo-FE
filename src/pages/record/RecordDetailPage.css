@@ -1,0 +1,68 @@
+.record-info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background-color: var(--color-bg-accent);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-subtitle);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr;
+    gap: 24px; 
+    margin-top: 24px;
+}
+
+.right-card-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; 
+}
+
+/* 전체 카드 기본 스타일 */
+.content-card,
+.analysis-card {
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-subtle);
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 전체 카드의 제목 스타일 */
+.content-card h3,
+.analysis-card h3 {
+    font-size: var(--font-size-subtitle);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-primary);
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+/* 카드 내용 스타일 */
+.card-content {
+    flex-grow: 1; 
+    overflow-y: auto;
+    padding-bottom: 20px;
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-regular);
+}
+
+/* 스크롤바 스타일 */
+.card-content::-webkit-scrollbar {
+  width: 8px;
+}
+.card-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+.card-content::-webkit-scrollbar-thumb {
+  background: rgba(65, 60, 220, 0.4);
+  border-radius: 8px;
+}

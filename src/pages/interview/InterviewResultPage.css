@@ -1,0 +1,33 @@
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+}
+
+.result-card {
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-subtle);
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.result-card h3 {
+    font-size: var(--font-size-subtitle);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-primary);
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.large-card {
+    grid-column: span 3;
+    min-height: 300px;
+}
+
+.small-card {
+    grid-column: span 2;
+    min-height: 250px;
+}

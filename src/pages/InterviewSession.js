@@ -140,6 +140,12 @@ function InterviewSession() {
     navigate("/select");
   };
 
+  /* 결과 확인용 임시 함수 */
+  const handleShowResult = () => {
+    const sessionId = '123'; // 예시 ID
+    navigate(`/interview/result/${sessionId}`);
+  };
+
   const handleDragStart = (e) => {
     if (resizingRef.current) return;
 
@@ -215,14 +221,24 @@ function InterviewSession() {
                     {formatTime(timeElapsed)}
                   </span>
                 </div>
-                <div>
+                {/* 결과 확인용 임시 버튼 추가 */}
+                <div className="header-buttons">
+                  <button className="exit-button" onClick={() => setExitConfirmVisible(true)}>
+                    Exit
+                  </button>
+                  <button className="result-btn" onClick={handleShowResult}>
+                    결과확인
+                  </button>
+                </div>
+                { /* 본래 코드__결과 확인용 임시 버튼 없음*/}
+                {/* <div>
                   <button
                     className="exit-button"
                     onClick={() => setExitConfirmVisible(true)}
                   >
                     Exit
                   </button>
-                </div>
+                </div> */}
               </div>
 
               <hr className="hero-divider" />
